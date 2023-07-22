@@ -66,7 +66,7 @@ $ npm run test:cov
 
 ## Library
 Handle Prisma Error on NestJS
-https://www.prisma.io/blog/nestjs-prisma-error-handling-7D056s1kOop2
+(https://www.prisma.io/blog/nestjs-prisma-error-handling-7D056s1kOop2)
 
 ## Support
 
