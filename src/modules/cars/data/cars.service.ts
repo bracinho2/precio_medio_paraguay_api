@@ -1,12 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Car, Prisma, PrismaClient } from '@prisma/client';
 import { CreateCarDto } from '../interactor/dto/create-car.dto';
 import { UpdateCarDto } from '../interactor/dto/update-car.dto';
 import { CarService } from '../interactor/service/car_service';
 
 @Injectable()
 export class CarServiceImpl implements CarService {
-  create(createCarDto: CreateCarDto) {
-    return 'This action adds a new car';
+  constructor(private readonly prisma: PrismaClient) { }
+  async create(data: Prisma.CarCreateInput): Promise<Car> {
+    try {
+      return await this.prisma.car.create({ data: data });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new HttpException('car already exists!', HttpStatus.BAD_REQUEST);
+      }
+    }
   }
 
   findAll() {

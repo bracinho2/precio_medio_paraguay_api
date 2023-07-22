@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 
-import { CreateCarDto } from '../../interactor/dto/create-car.dto';
+import { Prisma } from '@prisma/client';
+import { Public } from 'src/auth/core/constants';
 import { UpdateCarDto } from '../../interactor/dto/update-car.dto';
 import { CarService } from '../../interactor/service/car_service';
 
@@ -10,10 +11,11 @@ export class CarsController {
   constructor(private readonly carsService: CarService) { }
 
   @Post()
-  create(@Body() createCarDto: CreateCarDto) {
+  create(@Body() createCarDto: Prisma.CarCreateInput) {
     return this.carsService.create(createCarDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.carsService.findAll();
